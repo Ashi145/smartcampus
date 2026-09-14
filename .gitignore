@@ -1,0 +1,5 @@
+out/
+*.class
+data/*.csv
+data/transcripts/
+src/data/
