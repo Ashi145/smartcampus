@@ -1,92 +1,92 @@
 # Smart Campus Student Management System
 
-A console-based Java application for the "Smart Campus Student Management and
-Academic Information System" coursework. No database server or extra libraries
-needed — it saves everything to plain CSV files in the `data/` folder, so it
-runs with nothing more than a JDK.
+This is a simple Java console application made for the Smart Campus Student Management System coursework.
 
-## How to run it in VS Code
+The system is used to manage students, lecturers, courses, departments, attendance and academic results.
 
-1. Open the `SmartCampus` folder in VS Code (`File > Open Folder`).
-2. Install the **Extension Pack for Java** (by Microsoft) if you don't have it —
-   VS Code will usually prompt you to install it automatically when it sees a
-   `.java` file.
+## Main Features
+
+The system has three types of users:
+
+* Admin
+* Lecturer
+* Student
+
+The admin can add departments, courses, lecturers and students.
+
+The lecturer can record attendance and enter student marks.
+
+The student can register for courses and view attendance, results and GPA.
+
+## Technologies Used
+
+* Java
+* Java OOP
+* CSV files
+* VS Code
+
+No database or extra libraries are required.
+
+## How to Run in VS Code
+
+1. Open the `SmartCampus` folder in VS Code.
+2. Make sure the Java Extension Pack is installed.
 3. Open `src/com/smartcampus/Main.java`.
-4. Click the **Run** button above `public static void main` (or press `F5`).
+4. Click the **Run** button above the `main` method.
 
-That's it — a terminal panel opens inside VS Code with the menu.
+## How to Run in Terminal
 
-## How to run it without VS Code (plain terminal)
+Open the terminal inside the `SmartCampus` folder and run:
 
 ```bash
-cd SmartCampus
-javac -d out $(find src -name "*.java")   # compile
-java -cp out com.smartcampus.Main         # run
+javac -d out $(find src -name "*.java")
 ```
 
-On Windows PowerShell, compile with:
-```powershell
-javac -d out (Get-ChildItem -Recurse -Filter *.java src | ForEach-Object { $_.FullName })
+Then run:
+
+```bash
 java -cp out com.smartcampus.Main
 ```
 
-## First login
+## Login
 
-The very first time you run it, an admin account is created automatically:
+The default admin account is:
 
-```
-username: admin
-password: admin123
-```
-
-Log in as admin first to add a department, a course, a lecturer and a student —
-then log out and log back in as the lecturer or student to try their menus.
-
-## Suggested demo flow
-
-1. Login as `admin` → Add Department → Add Course → Add Lecturer → Add Student
-   → Assign Lecturer to Course.
-2. Login as the lecturer you created → Record Attendance → Enter Marks.
-3. Login as the student you created → Register for a Course → View Attendance
-   → View Results/GPA → View/Save Transcript.
-
-## Project structure (maps to OOP concepts for your report)
-
-```
-src/com/smartcampus/
-  model/       User (abstract), Admin, Lecturer, Student, Department,
-               Course, Enrollment, AttendanceRecord, Mark
-               -> INHERITANCE: Admin/Lecturer/Student extend User
-               -> POLYMORPHISM: getRole() overridden per subclass;
-                  Main routes on the same User reference via instanceof
-               -> ENCAPSULATION: private fields, public getters/setters
-
-  service/     AuthService, AcademicService, EnrollmentService,
-               AttendanceService, GradeService, TranscriptService
-               -> business logic and file persistence, kept separate
-                  from the model classes and from Main (separation of concerns)
-
-  util/        CsvUtil - shared file read/write helper
-
-  Main.java    console menu, one method per menu action
-
-data/          CSV "database" files, created automatically on first run
+```text
+Username: admin
+Password: admin123
 ```
 
-## Where the grading logic lives
+After logging in as admin, you can add the information needed to test the system.
 
-`GradeService.java`:
-- Total = 30% coursework + 70% exam
-- Grade: A ≥ 80, B ≥ 70, C ≥ 60, D ≥ 50, F < 50
-- Grade points (5.0 scale): A=5, B=4, C=3, D=2, F=0
-- GPA = credit-unit-weighted average across all courses with a mark
+## Testing the System
 
-These numbers are just constants near the top of the file — change them if
-your department uses a different weighting or scale.
+A simple way to test the system is to first login as admin and create a department, course, lecturer and student.
 
-## Known simplifications (worth mentioning in your report)
+Then login as the lecturer to record attendance and enter marks.
 
-- No password hashing — passwords are stored in plain text in the CSV files,
-  which is fine for a coursework demo but never for a real deployed system.
-- CSV values can't contain commas (a course title with a comma would break a row).
-- No concurrent-user handling — it's a single-user console session.
+Finally, login as the student to register for a course and check attendance, results and GPA.
+
+## Project Folders
+
+The main folders are:
+
+* `model` - contains the main classes used in the system.
+* `service` - contains the main system operations.
+* `util` - contains helper classes.
+* `data` - contains the CSV files used to save information.
+
+`Main.java` contains the main program and menus.
+
+## Grading
+
+The system currently uses:
+
+* Coursework: 30%
+* Exam: 70%
+
+The grades are from A to F and the system also calculates the student's GPA.
+
+## Note
+
+This project is mainly for learning and coursework purposes. It uses CSV files for storing data instead of a real database.
